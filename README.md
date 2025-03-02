@@ -271,9 +271,9 @@ Legend:L=Learned O=Oam P=Protected-MAC C=Conditional S=Static Lf=Leaf T=Trusted
 
 ## Task 7: Stitch both DCs using MPLS tunnels
 
-In the previous steps we have configured EVPN-VXLAN based domains on each DC but they only provide connectivity within their local DCs. Now it is time to stitch these domains using MPLS tunnels.
+In the previous steps, we configured EVPN-VXLAN domains within each data center, enabling connectivity only within their respective DCs. Now, we need to interconnect these domains using MPLS tunnels.
 
-In order to do that we need to login to the PE1 and P2 and modify the EVPN service we created on Task 5 and add a second BGP instance that will serve for MPLS tunnels.
+To achieve this, we must log in to PE1 and PE2, modify the EVPN service configured in Task 5, and add a second BGP instance dedicated to MPLS tunnels.
 
 <details>
 <summary>Solution for both PE1 and PE2</summary>
