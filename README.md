@@ -84,14 +84,14 @@ Note: vRR system IP is fd00:fde8::3:13
 <details>
 <summary>Solution</summary>
 
-For SRLinux
 ```
-show network-instance default protocols bgp neighbor
+# For SRLinux
+/show network-instance default protocols bgp neighbor
 ```
 
-For SROS
 ```
-show router bgp summary
+# For SROS
+/show router bgp summary
 ```
 </details>
 
