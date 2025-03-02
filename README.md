@@ -48,21 +48,23 @@ The datapath will look like this:
 **Check the status of BGP neighbors**
 
 ```
-#For SRLinux
+# For SRLinux
 /show network-instance default protocols bgp neighbor
 ```
-**for SROS**
+
 ```
+# For SROS
 /show router bgp summary
 ```
 **Check whether the routing tables have the system IP of VxLAN tunnel endpoints. (Leaf and PE)**
 
-**for SRLinux**
 ```
+# For SRLinux
 /show network-instance default route-table
 ```
-**for SROS**
+
 ```
+# For SROS
 /show router route-table ipv4
 /show router route-table ipv6
 ```
