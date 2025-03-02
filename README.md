@@ -47,8 +47,8 @@ The datapath will look like this:
 
 **Check the status of BGP neighbors**
 
-**for SRLinux**
 ```
+#For SRLinux
 /show network-instance default protocols bgp neighbor
 ```
 **for SROS**
