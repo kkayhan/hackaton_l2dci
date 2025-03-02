@@ -90,15 +90,7 @@ The datapath will look like this:
 
 client21 <-dot1q-> leaf21 <-vxlan-> PE1 <-mpls-> P1&P2 <-mpls-> PE2 <-vxlan-> Spine11&Spine12 <-vxlan-> leaf11 <-dot1q-> client11
 
-flowchart LR
-
-    client21[client21] ---|dot1q| leaf21[leaf21]
-    leaf21[leaf21] ---|vxlan| PE1[PE1]
-    PE1[PE1] ---|mpls| p1p2["P1&P2"]
-    p1p2["P1&P2"] ---|mpls| PE2[PE2]
-    PE2[PE2] ---|vxlan| spine["Spine11&Spine12"]
-    spine["Spine11&Spine12"] ---|vxlan| leaf11[leaf11]
-    leaf11[leaf11] ---|dot1q| client11[client11]
+**client21** <-*dot1q*-> **leaf21** <-*vxlan*-> **PE1** <-*mpls*-> **P1&P2** <-*mpls*-> **PE2** <-*vxlan*-> **Spine11&Spine12** <-*vxlan*-> **leaf11** <-*dot1q*-> **client11**
 
 <details>
 <summary>Solution</summary>
