@@ -245,6 +245,21 @@ You will see that ping will not be successfull because we are missing the MPLS t
 <summary>Solution for PE2</summary>
 
 ```
+A:admin@g3-pe2# show service id "l2dci" fdb detail
+
+===============================================================================
+Forwarding Database, Service 99
+===============================================================================
+ServId     MAC               Source-Identifier       Type     Last Change
+            Transport:Tnl-Id                         Age
+-------------------------------------------------------------------------------
+99         aa:c1:ab:c3:5b:bf vxlan-1:                Evpn     03/02/25 20:02:54
+                             10.46.3.33:1000
+-------------------------------------------------------------------------------
+No. of MAC Entries: 1
+-------------------------------------------------------------------------------
+Legend:L=Learned O=Oam P=Protected-MAC C=Conditional S=Static Lf=Leaf T=Trusted
+===============================================================================
 
 ```
 
