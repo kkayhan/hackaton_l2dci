@@ -18,6 +18,10 @@ You will perform necessary pre-checks to understand whether or not the underlay 
 
 The EVPN DCI service will be configured between `leaf11` and `leaf21`, intending to provide L2 connectivity between `client11` and `client21`.
 
+The datapath will look like this:
+
+**client21** <*dot1q*> **leaf21** <*vxlan*> **PE1** <*mpls*> **P1&P2** <*mpls*> **PE2** <*vxlan*> **Spine11&Spine12** <*vxlan*> **leaf11** <*dot1q*> **client11**
+
 The VxLAN to MPLS stitching is done on node `pe1` for `leaf21` and on node `pe2` for `leaf11`. In production networks, the DCGWs are redundant pairs but having such design requires implementing specific routing policies to prevent loops for L2 interconnect cases. For sake of simplicity we've chosen a non-redundant solution.
 
 
@@ -38,11 +42,6 @@ ssh -l user clab-srexperts-client21
 In each datacenter the leaf node needs to have a way to reach the edge of the datacenter, also known as the DCGW. In both datacenters in this topology, eBGP fulfills the role of underlay transport protocol that is used to route VxLAN encapsulated packets.
 
 Confirm that the underlay network is set up correctly, and the leafs have reachability to the DCGWs and the `vRR` node being used to exchange service routes. In a production network the spines are usually selected as the route-reflectors, but in this case vRR is going to serve as RR.
-
-The datapath will look like this:
-
-**client21** <*dot1q*> **leaf21** <*vxlan*> **PE1** <*mpls*> **P1&P2** <*mpls*> **PE2** <*vxlan*> **Spine11&Spine12** <*vxlan*> **leaf11** <*dot1q*> **client11**
-
 
 
 **Check the status of BGP neighbors**
