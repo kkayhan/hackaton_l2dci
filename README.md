@@ -90,6 +90,8 @@ The datapath will look like this:
 
 **client21** <*dot1q*> **leaf21** <*vxlan*> **PE1** <*mpls*> **P1&P2** <*mpls*> **PE2** <*vxlan*> **Spine11&Spine12** <*vxlan*> **leaf11** <*dot1q*> **client11**
 
+**client21** <<font color="green"><em>dot1q</em></font>> **leaf21** <<font color="blue"><em>vxlan</em></font>> **PE1** <<font color="red"><em>mpls</em></font>> **P1&P2** <<font color="red"><em>mpls</em></font>> **PE2** <<font color="blue"><em>vxlan</em></font>> **Spine11&Spine12** <<font color="blue"><em>vxlan</em></font>> **leaf11** <<font color="green"><em>dot1q</em></font>> **client11**
+
 <details>
 <summary>Solution</summary>
 
