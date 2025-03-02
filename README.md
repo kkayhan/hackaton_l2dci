@@ -298,9 +298,12 @@ commit
 
 ## Task 8: Test your service by exchanging traffic between the client devices
 
-Now re-try the ping from Client11 and Client21 and the PING should be successfull. How many MAC addresses do you see on the MAC / FDB tables?
+Now re-try the ping from Client11 and Client21 and the PING should be successfull. How many MAC addresses do you see on the MAC / FDB tables? What are the next hops for MAC entries?
 
-By reusing the commands from earlier tasks in this use case, you should notice additional routes being exchanged across various BGP sessions. How many extra routes do you observe? In which specific peerings? Does this align with your expectations?
+For SRLinux you can use 
+```show network-instance l2dci bridge-table mac-table all```
+For SROS you can use
+```show service id "service-name" fdb detail```
 
 <details>
 <summary>Solution</summary>
@@ -374,6 +377,5 @@ Mac-table of network instance l2dci
 ```
 </details>
 
-*What is the next hop address that `leaf11` follows to go to PE2?*
 
 
