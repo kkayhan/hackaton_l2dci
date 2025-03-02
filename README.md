@@ -306,7 +306,7 @@ Legend:L=Learned O=Oam P=Protected-MAC C=Conditional S=Static Lf=Leaf T=Trusted
 
 In the previous steps, we configured EVPN-VXLAN domains within each data center, enabling connectivity only within their respective DCs. Now, we need to interconnect these domains using MPLS tunnels.
 
-To achieve this, we must log in to PE1 and PE2, modify the EVPN service configured in Task 5, and add a second BGP instance dedicated to MPLS tunnels.
+To achieve this, we must modify the EVPN service configured in Task 5, and add a second BGP instance dedicated to MPLS tunnels.
 
 <details>
 <summary>Solution for both PE1 and PE2</summary>
