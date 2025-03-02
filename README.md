@@ -14,7 +14,7 @@ The EVPN DCI service will be configured between `leaf11` and `leaf21`, intending
 
 The VxLAN to MPLS stitching is done on node `pe1` for `leaf21` and on node `pe2` for `leaf11`. In production networks, the DCGWs are redundant pairs but having such design requires arjusting routing policies to prevent loops. For sake of simplicity we've chosen non-redundant solution.
 
-![topology](./../topology/SReXperts2024-topology.png)
+![topology](./topology.png)
 
 ## Accessing the lab
 In this lab you will interact with the model-driven SR OS nodes `pe1`, `pe2`, as well as  the SR Linux nodes `leaf11` and `leaf21`. Lastly, you will need the client devices `client11` and `client21`. Commands to access these nodes are
