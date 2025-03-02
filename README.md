@@ -76,18 +76,22 @@ The datapath will look like this:
 /show router route-table ipv6
 ```
 
-
-
 ## Task 2: Confirm the overlay for both datacenters is functional and ready
-iBGP is used to exchange overlay EVPN routes. The underlay facilitates this connectivity between the loopbacks of EVPN speakers. For this topology, each leaf peers with the `vRR` node. In production environments, the leaf would be peering with the spines instead. Verify that this peering is setup and functional, verify the address-family of the peering and record the amount of routes being exchanged.
+iBGP EVPN family is used to exchange overlay routes. The underlay facilitates this connectivity between the loopbacks of EVPN speakers. For this topology, each leaf peers with the `vRR` node. In production environments, the leaf would be peering with the spines or DCGW instead. Verify that this peering is setup and functional, verify the address-family of the peering and record the amount of routes being exchanged.
 
 Note: vRR system IP is fd00:fde8::3:13
 
 <details>
 <summary>Solution</summary>
 
+For SRLinux
 ```
-/show network-instance default protocols bgp neighbor
+show network-instance default protocols bgp neighbor
+```
+
+For SROS
+```
+show router bgp summary
 ```
 </details>
 
