@@ -85,14 +85,9 @@ Note: vRR system IP is fd00:fde8::3:13
 <summary>Solution</summary>
 
 ```
-# For SRLinux
 /show network-instance default protocols bgp neighbor
 ```
 
-```
-# For SROS
-/show router bgp summary
-```
 </details>
 
 ## Task 3: Confirm the DCGWs are ready in both datacenters
@@ -108,7 +103,9 @@ show router bgp summary
 </details>
 
 ## Task 4: Configure the service on the SR Linux leafs
+We have confirmed that Underlay routing is established and correctly announcing loopbacks. BGP EVPN is set up via loopbacks, facilitating the exchange of overlay routes between the vRR, leaf, and PEs. Now, we proceed with configuring an L2 EVPN overlay service to transport traffic between data centers across the WAN.
 
+The initial step is to configure an EVPN-VXLAN service on leaf11, which has a physical interface connected to the client. On both leaf switches, Ethernet-1/1 interfaces face their respective local clients, utilizing dot1q tag 1000. 
 
 <details>
 <summary>Solution for leaf11</summary>
@@ -169,11 +166,11 @@ set / network-instance l2dci protocols bgp-vpn bgp-instance 1 route-target impor
 
 commit now
 ```
-
 </details>
 
 ## Task 5: Configure the service on the SROS PE/DCGW nodes that will stitch VXLAN and MPLS tunnels
-TODO / Placeholder: Configure the service on SR OS
+
+The L2 EVPN-VXLAN overlay has been configured on leaf11 and leaf21. Next, we need to set up a similar service on SROS-based PE1 and PE2, ensuring that the RT and VNI match the configuration on the leaf switches.
 
 <details>
 <summary>Solution for PE1</summary>
@@ -190,32 +187,20 @@ configure global
 #Attach the VxLAN interface
 /configure service vpls "l2dci" vxlan instance 1 vni 2000
 
-# First instance of BGP will serve to the VXLAN domain hence RT has to match the RT set on the Leaf
 /configure service vpls "l2dci" bgp 1 route-distinguisher auto-rd
 /configure service vpls "l2dci" bgp 1 route-target export "target:2:1000"
 /configure service vpls "l2dci" bgp 1 route-target import "target:2:1000"
-
-# Second instance of BGP will serve to the MPLS domain, hence RT has to match the RT of the remote DCGW.
-/configure service vpls "l2dci" bgp 2 route-distinguisher auto-rd
-/configure service vpls "l2dci" bgp 2 route-target export "target:99:99"
-/configure service vpls "l2dci" bgp 2 route-target import "target:99:99"
-
 /configure service vpls "l2dci" bgp-evpn evi 99
 
 # Tunnel binding for VXLAN domain
 /configure service vpls "l2dci" bgp-evpn vxlan 1 admin-state enable
 /configure service vpls "l2dci" bgp-evpn vxlan 1 vxlan-instance 1
 
-# Tunnel binding for MPLS domain
-/configure service vpls "l2dci" bgp-evpn mpls 2 admin-state enable
-/configure service vpls "l2dci" bgp-evpn mpls 2 auto-bind-tunnel resolution any
-
 commit
 
 ```
 
 </details>
-
 
 <details>
 <summary>Solution for PE2</summary>
@@ -237,28 +222,37 @@ configure global
 /configure service vpls "l2dci" bgp 1 route-target export "target:1:1000"
 /configure service vpls "l2dci" bgp 1 route-target import "target:1:1000"
 
-# Second instance of BGP will serve to the MPLS domain, hence RT has to match the RT of the remote DCGW.
-/configure service vpls "l2dci" bgp 2 route-distinguisher auto-rd
-/configure service vpls "l2dci" bgp 2 route-target export "target:99:99"
-/configure service vpls "l2dci" bgp 2 route-target import "target:99:99"
-
 /configure service vpls "l2dci" bgp-evpn evi 99
 
 # Tunnel binding for VXLAN domain
 /configure service vpls "l2dci" bgp-evpn vxlan 1 admin-state enable
 /configure service vpls "l2dci" bgp-evpn vxlan 1 vxlan-instance 1
 
-# Tunnel binding for MPLS domain
-/configure service vpls "l2dci" bgp-evpn mpls 2 admin-state enable
-/configure service vpls "l2dci" bgp-evpn mpls 2 auto-bind-tunnel resolution any
-
 commit
 ```
 
 </details>
 
+## Task 7: Start a PING from Client11 to Client21
+Leaf and PE devices has been configured with EVPN-VxLAN overlay domains/services. Now we can start a ping from Client11 towards Client21.
 
-## Task 6: Test your service by exchanging traffic between the client devices
+Client11 Interface IP is 192.168.192.2
+Client21 Interface IP is 192.168.192.1
+
+You will see that ping will not be successfull because we are missing the MPLS tunnel that stitches both datacenters. However we should be able to see the client MAC address on the PE's FDB table. Verify that MAC has been properly populated in the FDB table on PE2.
+
+<details>
+<summary>Solution for PE2</summary>
+
+```
+
+```
+
+</details>
+
+
+
+## Task 8: Test your service by exchanging traffic between the client devices
 By re-using the commands from the earlier tasks in this usecase, you should observe that additional routes are being exchanged in the various BGP sessions. How many additional routes do you see? In which peerings specifically? Is that in line with your expectation?
 
 If the services set up correctly and the necessary routes are being exchanged, sending traffic between the clients should now be possible. The tried and true method for verifying such matters is still ping. Thus, issue a ping command on either of the clients and confirm it can reach and receive responses from the other client through your service.
