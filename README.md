@@ -1,4 +1,4 @@
-# Configuring a DCI service on SR Linux and SR OS
+# Configuring a L2 DCI service on SR Linux and SR OS
 
 | Item | Details |
 | --- | --- |
@@ -82,7 +82,7 @@ show router bgp summary
 ```
 </details>
 
-## Task 4: Configure your service on the SR Linux leafs to accept traffic from clients
+## Task 4: Configure the service on the SR Linux leafs
 
 
 <details>
@@ -137,7 +137,7 @@ commit now
 
 </details>
 
-## Task 5: Configure the PE nodes to re-encapsulate VXLAN traffic into MPLS for the WAN
+## Task 5: Configure the service on the SROS PE/DCGW nodes that will stitch VXLAN and MPLS tunnels
 TODO / Placeholder: Configure the service on SR OS
 
 <details>
