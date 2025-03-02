@@ -88,9 +88,7 @@ Confirm that the underlay network is set up correctly, and the leafs have reacha
 
 The datapath will look like this:
 
-client21 <-dot1q-> leaf21 <-vxlan-> PE1 <-mpls-> P1&P2 <-mpls-> PE2 <-vxlan-> Spine11&Spine12 <-vxlan-> leaf11 <-dot1q-> client11
-
-**client21** <-*dot1q*-> **leaf21** <-*vxlan*-> **PE1** <-*mpls*-> **P1&P2** <-*mpls*-> **PE2** <-*vxlan*-> **Spine11&Spine12** <-*vxlan*-> **leaf11** <-*dot1q*-> **client11**
+**client21** <*dot1q*> **leaf21** <*vxlan*> **PE1** <*mpls*> **P1&P2** <*mpls*> **PE2** <*vxlan*> **Spine11&Spine12** <*vxlan*> **leaf11** <*dot1q*> **client11**
 
 <details>
 <summary>Solution</summary>
