@@ -97,9 +97,11 @@ Note: vRR system IP is fd00:fde8::3:13
 
 <details>
 <summary>Solution</summary>
+
 ```
 show router bgp summary
 ```
+
 </details>
 
 ## Task 4: Configure the service on the SR Linux leafs
@@ -301,7 +303,8 @@ commit
 Now re-try the ping from Client11 and Client21 and the PING should be successfull. How many MAC addresses do you see on the MAC / FDB tables? What are the next hops for MAC entries?
 
 For SRLinux you can use 
-```show network-instance l2dci bridge-table mac-table all```
+```show network-instance "network-instance-name" bridge-table mac-table all```
+
 For SROS you can use
 ```show service id "service-name" fdb detail```
 
