@@ -32,8 +32,6 @@ ssh -l admin clab-srexperts-leaf21
 #
 ssh -l user clab-srexperts-client11
 ssh -l user clab-srexperts-client21
-
-Password: SReXperts2024
 ```
 
 ## Task 1: Confirm the underlay for both datacenters is functional and ready
