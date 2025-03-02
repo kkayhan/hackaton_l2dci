@@ -76,7 +76,7 @@ The datapath will look like this:
 /show router route-table ipv6
 ```
 
-## Task 2: Confirm the overlay for both datacenters is functional and ready
+## Task 2: Confirm the Leaf BGP-EVPN peerings have established and exchanging routes
 iBGP EVPN family is used to exchange overlay routes. The underlay facilitates this connectivity between the loopbacks of EVPN speakers. For this topology, each leaf peers with the `vRR` node. In production environments, the leaf would be peering with the spines or DCGW instead. Verify that this peering is setup and functional, verify the address-family of the peering and record the amount of routes being exchanged.
 
 Note: vRR system IP is fd00:fde8::3:13
@@ -85,12 +85,25 @@ Note: vRR system IP is fd00:fde8::3:13
 <summary>Solution</summary>
 
 ```
-/show network-instance default protocols bgp neighbor
+A:g3-leaf11# show network-instance default protocols bgp neighbor fd00:fde8::3:13
+----------------------------------------------------------------------------------------------------------------------------------------
+BGP neighbor summary for network-instance "default"
+Flags: S static, D dynamic, L discovered by LLDP, B BFD enabled, - disabled, * slow
+----------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------
++---------------+----------------------+---------------+------+--------+------------+------------+-----------+----------------------+
+|   Net-Inst    |         Peer         |     Group     | Flag | Peer-  |   State    |   Uptime   | AFI/SAFI  |    [Rx/Active/Tx]    |
+|               |                      |               |  s   |   AS   |            |            |           |                      |
++===============+======================+===============+======+========+============+============+===========+======================+
+| default       | fd00:fde8::3:13      | iBGP          | S    | 65000  | establishe | 0d:1h:16m: | evpn      | [57/39/21]           |
+|               |                      |               |      |        | d          | 8s         |           |                      |
++---------------+----------------------+---------------+------+--------+------------+------------+-----------+----------------------+
+----------------------------------------------------------------------------------------------------------------------------------------
 ```
 
 </details>
 
-## Task 3: Confirm the DCGWs are ready in both datacenters
+## Task 3: Confirm the DCGW BGP-EVPN peerings have established and exchanging routes
 The `vRR` is expected to be exchanging routes with both the DCGW nodes and the leafs. In the last step, we verified the latter, now access the two PE nodes and confirm the EVPN peering with vRR is in an good shape. Once again, record the address-families in use as well as the number of routes being exchanged.
 
 Note: vRR system IP is fd00:fde8::3:13
