@@ -99,8 +99,8 @@ Note: vRR system IP is fd00:fde8::3:13
 <summary>Solution</summary>
 
 ```
-show router bgp summary
-
+show router bgp summary neighbor "fd00:fde8::3:13"
+...omitted output...
 ===============================================================================
 BGP Summary
 ===============================================================================
