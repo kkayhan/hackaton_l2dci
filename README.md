@@ -96,25 +96,62 @@ show router bgp summary
 TODO / Placeholder: Configure the service on SR OS
 
 <details>
-<summary>Solution</summary>
+<summary>Solution for PE1</summary>
 
 ```
-enter candidate
+exit all
+configure global
 
-set / tunnel-interface vxlan0 vxlan-interface 1000 type bridged
-set / tunnel-interface vxlan0 vxlan-interface 1000 ingress vni 1000
+/configure service vpls "l2dci" admin-state enable
+/configure service vpls "l2dci" service-id 99
+/configure service vpls "l2dci" customer "1"
+/configure service vpls "l2dci" vxlan instance 1 vni 2000
+/configure service vpls "l2dci" bgp 1 route-distinguisher auto-rd
+/configure service vpls "l2dci" bgp 1 route-target export "target:2:1000"
+/configure service vpls "l2dci" bgp 1 route-target import "target:2:1000"
+/configure service vpls "l2dci" bgp 2 route-distinguisher auto-rd
+/configure service vpls "l2dci" bgp 2 route-target export "target:99:99"
+/configure service vpls "l2dci" bgp 2 route-target import "target:99:99"
+/configure service vpls "l2dci" bgp-evpn evi 99
+/configure service vpls "l2dci" bgp-evpn vxlan 1 admin-state enable
+/configure service vpls "l2dci" bgp-evpn vxlan 1 vxlan-instance 1
+/configure service vpls "l2dci" bgp-evpn mpls 2 admin-state enable
+/configure service vpls "l2dci" bgp-evpn mpls 2 auto-bind-tunnel resolution any
 
-set / network-instance l2dci type mac-vrf
-set / network-instance l2dci admin-state enable
-set / network-instance l2dci interface ethernet-1/1.1000
-set / network-instance l2dci vxlan-interface vxlan0.1000
-set / network-instance l2dci protocols bgp-evpn bgp-instance 1 admin-state enable
-set / network-instance l2dci protocols bgp-evpn bgp-instance 1 vxlan-interface vxlan0.1000
-set / network-instance l2dci protocols bgp-evpn bgp-instance 1 evi 99
-set / network-instance l2dci protocols bgp-vpn bgp-instance 1 route-target export-rt target:2:1000
-set / network-instance l2dci protocols bgp-vpn bgp-instance 1 route-target import-rt target:2:1000
+commit
 
-commit now
+```
+
+</details>
+
+
+<details>
+<summary>Solution for PE2</summary>
+
+```
+exit all
+configure global
+
+/configure service vpls "l2dci" admin-state enable
+/configure service vpls "l2dci" service-id 99
+/configure service vpls "l2dci" customer "1"
+/configure service vpls "l2dci" vxlan instance 1 vni 1000
+/configure service vpls "l2dci" bgp 1 route-distinguisher auto-rd
+/configure service vpls "l2dci" bgp 1 route-target export "target:1:1000"
+/configure service vpls "l2dci" bgp 1 route-target import "target:1:1000"
+/configure service vpls "l2dci" bgp 2 route-distinguisher auto-rd
+/configure service vpls "l2dci" bgp 2 route-target export "target:99:99"
+/configure service vpls "l2dci" bgp 2 route-target import "target:99:99"
+/configure service vpls "l2dci" bgp-evpn evi 99
+/configure service vpls "l2dci" bgp-evpn vxlan 1 admin-state enable
+/configure service vpls "l2dci" bgp-evpn vxlan 1 vxlan-instance 1
+/configure service vpls "l2dci" bgp-evpn mpls 2 admin-state enable
+/configure service vpls "l2dci" bgp-evpn mpls 2 auto-bind-tunnel resolution any
+
+commit
+
+
+
 
 ```
 
