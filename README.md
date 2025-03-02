@@ -2,13 +2,15 @@
 
 | Item | Details |
 | --- | --- |
-| Short Description | Learn what goes into configuring a DCI service between two datacenters. |
+| Short Description | Learn how to stretch a broadcast domain between two datacenters using EVPN-MPLS Interconnect for EVPN-VXLAN VPLS Services. |
 | Skill Level | Intermediate |
 | Tools Used | SR OS, EVPN, SR Linux |
 
 ## Objective
 
-In this lab, you will configure a L2 DCI or L2 Datacenter Interconnect EVPN service between two leafs in the Hackathon topology. On the one right side of the diagram we have a full-fledged datacenter and on the left side of the diagram a smaller site with only an SR Linux and SR OS node. You will perform necessary pre-checks to understand whether or not the underlay and overlay are ready, add the configuration for your service and verify it functions correctly.
+In this lab, you will configure a L2 DCI or L2 Datacenter Interconnect EVPN service between two leafs as depicted in the SROS user guide chapter [EVPN-MPLS Interconnect for EVPN-VXLAN VPLS Services](https://documentation.nokia.com/acg/24-7-2/books/layer-2-services-evpn-md/m1127-evpn-dci-md-cli.html#undefined) .
+
+. On the one right side of the diagram we have a full-fledged datacenter and on the left side of the diagram a smaller site with only an SR Linux and SR OS node. You will perform necessary pre-checks to understand whether or not the underlay and overlay are ready, add the configuration for your service and verify it functions correctly.
 
 The EVPN DCI service will be configured between `leaf11` and `leaf21`, intending to provide connectivity between `client11` and `client21`.
 
