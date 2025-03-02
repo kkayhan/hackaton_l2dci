@@ -32,6 +32,8 @@ ssh -l admin clab-srexperts-leaf21
 #
 ssh -l user clab-srexperts-client11
 ssh -l user clab-srexperts-client21
+
+Password: SReXperts2024
 ```
 
 ## Task 1: Confirm the underlay for both datacenters is functional and ready
@@ -48,11 +50,13 @@ The datapath will look like this:
 <summary>Solution</summary>
 
 ```
-for SRLinux
+**Check the status of BGP neighbors**
+*for SRLinux*
 /show network-instance default protocols bgp neighbor
-for SROS
+*for SROS*
 /show router bgp summary
 
+**Check whether the routing tables have the system IP of VxLAN tunnel endpoints. (Leaf and PE)**
 for SRLinux
 /show network-instance default route-table
 for SROS
