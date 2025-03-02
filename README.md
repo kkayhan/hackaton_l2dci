@@ -27,7 +27,7 @@ ssh -l admin clab-srexperts-pe1
 ssh -l admin clab-srexperts-pe2
 #
 ssh -l admin clab-srexperts-leaf11
-ssh -l admin clab-srexperts-leaf11
+ssh -l admin clab-srexperts-leaf21
 #
 ssh -l user clab-srexperts-client11
 ssh -l user clab-srexperts-client21
@@ -142,7 +142,8 @@ show router bgp summary
 <summary>Solution for leaf11</summary>
 
 ```
-/ enter candidate
+/ 
+enter candidate
 
 set / tunnel-interface vxlan0 vxlan-interface 1000 type bridged
 set / tunnel-interface vxlan0 vxlan-interface 1000 ingress vni 1000
@@ -158,7 +159,6 @@ set / network-instance l2dci protocols bgp-vpn bgp-instance 1 route-target expor
 set / network-instance l2dci protocols bgp-vpn bgp-instance 1 route-target import-rt target:1:1000
 
 commit now
-
 ```
 
 </details>
@@ -167,7 +167,8 @@ commit now
 <summary>Solution for leaf21</summary>
 
 ```
-/ enter candidate
+/ 
+enter candidate
 
 set / tunnel-interface vxlan0 vxlan-interface 2000 type bridged
 set / tunnel-interface vxlan0 vxlan-interface 2000 ingress vni 2000
@@ -183,9 +184,6 @@ set / network-instance l2dci protocols bgp-vpn bgp-instance 1 route-target expor
 set / network-instance l2dci protocols bgp-vpn bgp-instance 1 route-target import-rt target:2:1000
 
 commit now
-
-
-
 ```
 
 </details>
@@ -247,10 +245,6 @@ configure global
 /configure service vpls "l2dci" bgp-evpn mpls 2 auto-bind-tunnel resolution any
 
 commit
-
-
-
-
 ```
 
 </details>
@@ -355,9 +349,6 @@ set / network-instance l2dci protocols bgp-vpn bgp-instance 1 route-target expor
 set / network-instance l2dci protocols bgp-vpn bgp-instance 1 route-target import-rt target:2:1000
 
 commit now
-
-
-
 ```
 
 </details>
@@ -389,7 +380,6 @@ configure global
 /configure service vpls "l2dci" bgp-evpn mpls 2 auto-bind-tunnel resolution any
 
 commit
-
 ```
 
 </details>
@@ -419,10 +409,6 @@ configure global
 /configure service vpls "l2dci" bgp-evpn mpls 2 auto-bind-tunnel resolution any
 
 commit
-
-
-
-
 ```
 
 </details>
