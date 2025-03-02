@@ -44,9 +44,6 @@ The datapath will look like this:
 **client21** <*dot1q*> **leaf21** <*vxlan*> **PE1** <*mpls*> **P1&P2** <*mpls*> **PE2** <*vxlan*> **Spine11&Spine12** <*vxlan*> **leaf11** <*dot1q*> **client11**
 
 
-<details>
-<summary>Solution</summary>
-
 ```
 **Check the status of BGP neighbors**
 *for SRLinux*
@@ -61,7 +58,6 @@ for SROS
 /show router route-table ipv4
 /show router route-table ipv6
 ```
-</details>
 
 *What is the next hop address that `leaf11` follows to go to PE2?*
 
