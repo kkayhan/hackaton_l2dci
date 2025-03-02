@@ -168,7 +168,7 @@ commit now
 ```
 </details>
 
-## Task 5: Configure the service on the SROS PE/DCGW nodes that will stitch VXLAN and MPLS tunnels
+## Task 5: Configure the EVPN-VXLAN based L2 service on the SROS PE/DCGW
 
 The L2 EVPN-VXLAN overlay has been configured on leaf11 and leaf21. Next, we need to set up a similar service on SROS-based PE1 and PE2, ensuring that the RT and VNI match the configuration on the leaf switches.
 
@@ -233,13 +233,16 @@ commit
 
 </details>
 
-## Task 7: Start a PING from Client11 to Client21
-Leaf and PE devices has been configured with EVPN-VxLAN overlay domains/services. Now we can start a ping from Client11 towards Client21.
+## Task 6: Start a PING from Client11 to Client21
+Leaf and PE devices has been configured with EVPN-VxLAN overlay domains/services. They should be able to exchange overlay routes using EVPN family. Now we can start a ping from Client11 towards Client21 but ping will not be successfull because we are missing the MPLS tunnel that stitches both datacenters. However we should be able to see the client MAC address on the PE's FDB table. Verify that MAC has been properly populated in the FDB table on PE2.
 
 Client11 Interface IP is 192.168.192.2
+
 Client21 Interface IP is 192.168.192.1
 
-You will see that ping will not be successfull because we are missing the MPLS tunnel that stitches both datacenters. However we should be able to see the client MAC address on the PE's FDB table. Verify that MAC has been properly populated in the FDB table on PE2.
+Login to Client11 and start a ping towards Client21
+
+Then verify the MAC address of Client11 is populated in the mac table of the service we created on the PE2.
 
 <details>
 <summary>Solution for PE2</summary>
@@ -266,6 +269,32 @@ Legend:L=Learned O=Oam P=Protected-MAC C=Conditional S=Static Lf=Leaf T=Trusted
 </details>
 
 
+## Task 7: Stitch both DCs using MPLS tunnels
+
+In the previous steps we have configured EVPN-VXLAN based domains on each DC but they only provide connectivity within their local DCs. Now it is time to stitch these domains using MPLS tunnels.
+
+In order to do that we need to login to the PE1 and P2 and modify the EVPN service we created on Task 5 and add a second BGP instance that will serve for MPLS tunnels.
+
+<details>
+<summary>Solution for both PE1 and PE2</summary>
+
+```
+exit all
+configure global
+
+# Second instance of BGP will serve to the MPLS domain, hence RT of this part will be identical on all DCGWs.
+/configure service vpls "l2dci" bgp 2 route-distinguisher auto-rd
+/configure service vpls "l2dci" bgp 2 route-target export "target:99:99"
+/configure service vpls "l2dci" bgp 2 route-target import "target:99:99"
+
+# Tunnel binding for MPLS domain
+/configure service vpls "l2dci" bgp-evpn mpls 2 admin-state enable
+/configure service vpls "l2dci" bgp-evpn mpls 2 auto-bind-tunnel resolution any
+
+commit
+```
+
+</details>
 
 ## Task 8: Test your service by exchanging traffic between the client devices
 By re-using the commands from the earlier tasks in this usecase, you should observe that additional routes are being exchanged in the various BGP sessions. How many additional routes do you see? In which peerings specifically? Is that in line with your expectation?
