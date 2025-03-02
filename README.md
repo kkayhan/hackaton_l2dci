@@ -46,17 +46,26 @@ The datapath will look like this:
 
 
 **Check the status of BGP neighbors**
-*for SRLinux*
-/show network-instance default protocols bgp neighbor
-*for SROS*
-/show router bgp summary
 
+**for SRLinux**
+```
+/show network-instance default protocols bgp neighbor
+```
+**for SROS**
+```
+/show router bgp summary
+```
 **Check whether the routing tables have the system IP of VxLAN tunnel endpoints. (Leaf and PE)**
-for SRLinux
+
+**for SRLinux**
+```
 /show network-instance default route-table
-for SROS
+```
+**for SROS**
+```
 /show router route-table ipv4
 /show router route-table ipv6
+```
 
 *What is the next hop address that `leaf11` follows to go to PE2?*
 
