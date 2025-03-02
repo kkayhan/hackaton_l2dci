@@ -66,6 +66,8 @@ The datapath will look like this:
 ```
 # For SROS
 /show router route-table ipv4
+```
+```
 /show router route-table ipv6
 ```
 
