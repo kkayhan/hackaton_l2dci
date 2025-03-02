@@ -297,26 +297,84 @@ commit
 </details>
 
 ## Task 8: Test your service by exchanging traffic between the client devices
-By re-using the commands from the earlier tasks in this usecase, you should observe that additional routes are being exchanged in the various BGP sessions. How many additional routes do you see? In which peerings specifically? Is that in line with your expectation?
 
-If the services set up correctly and the necessary routes are being exchanged, sending traffic between the clients should now be possible. The tried and true method for verifying such matters is still ping. Thus, issue a ping command on either of the clients and confirm it can reach and receive responses from the other client through your service.
+Now re-try the ping from Client11 and Client21 and the PING should be successfull. How many MAC addresses do you see on the MAC / FDB tables?
 
-*Using any method you can think of, can you confirm the path the traffic takes through the network?*
+By reusing the commands from earlier tasks in this use case, you should notice additional routes being exchanged across various BGP sessions. How many extra routes do you observe? In which specific peerings? Does this align with your expectations?
 
 <details>
 <summary>Solution</summary>
 
 ```
-for SRLinux
-/show network-instance default protocols bgp neighbor
-for SROS
-/show router bgp summary
+A:g3-leaf11# show network-instance l2dci bridge-table mac-table all
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+Mac-table of network instance l2dci
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
++--------------------+-----------------------------------------+------------+-------------+---------+--------+-----------------------------------------+
+|      Address       |               Destination               | Dest Index |    Type     | Active  | Aging  |               Last Update               |
++====================+=========================================+============+=============+=========+========+=========================================+
+| AA:C1:AB:61:DC:E4  | vxlan-interface:vxlan0.1000             | 35972459   | evpn        | true    | N/A    | 2025-03-02T20:22:41.000Z                |
+|                    | vtep:10.46.3.22 vni:1000                |            |             |         |        |                                         |
+| AA:C1:AB:C3:5B:BF  | ethernet-1/1.1000                       | 15         | learnt      | true    | 264    | 2025-03-02T20:02:54.000Z                |
++--------------------+-----------------------------------------+------------+-------------+---------+--------+-----------------------------------------+
+```
 
-for SRLinux
-/show network-instance default route-table
-for SROS
-/show router route-table ipv4
-/show router route-table ipv6
+```
+A:admin@g3-pe1# show service id "l2dci" fdb detail
+
+===============================================================================
+Forwarding Database, Service 99
+===============================================================================
+ServId     MAC               Source-Identifier       Type     Last Change
+            Transport:Tnl-Id                         Age
+-------------------------------------------------------------------------------
+99         aa:c1:ab:61:dc:e4 vxlan-1:                Evpn     03/02/25 20:22:41
+                             10.46.3.41:2000
+99         aa:c1:ab:c3:5b:bf mpls-2:                 Evpn     03/02/25 20:22:42
+                             10.46.3.22:524287
+           isis:524293
+-------------------------------------------------------------------------------
+No. of MAC Entries: 2
+-------------------------------------------------------------------------------
+Legend:L=Learned O=Oam P=Protected-MAC C=Conditional S=Static Lf=Leaf T=Trusted
+===============================================================================
+
+```
+
+```
+A:admin@g3-pe2# show service id "l2dci" fdb detail
+
+===============================================================================
+Forwarding Database, Service 99
+===============================================================================
+ServId     MAC               Source-Identifier       Type     Last Change
+            Transport:Tnl-Id                         Age
+-------------------------------------------------------------------------------
+99         aa:c1:ab:61:dc:e4 mpls-2:                 Evpn     03/02/25 20:22:41
+                             10.46.3.21:524287
+           isis:524295
+99         aa:c1:ab:c3:5b:bf vxlan-1:                Evpn     03/02/25 20:02:54
+                             10.46.3.33:1000
+-------------------------------------------------------------------------------
+No. of MAC Entries: 2
+-------------------------------------------------------------------------------
+Legend:L=Learned O=Oam P=Protected-MAC C=Conditional S=Static Lf=Leaf T=Trusted
+===============================================================================
+
+```
+
+```
+A:g3-leaf21# show network-instance l2dci bridge-table mac-table all
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+Mac-table of network instance l2dci
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
++--------------------+-----------------------------------------+------------+-------------+---------+--------+-----------------------------------------+
+|      Address       |               Destination               | Dest Index |    Type     | Active  | Aging  |               Last Update               |
++====================+=========================================+============+=============+=========+========+=========================================+
+| AA:C1:AB:61:DC:E4  | ethernet-1/1.1000                       | 13         | learnt      | true    | 257    | 2025-03-02T20:22:41.000Z                |
+| AA:C1:AB:C3:5B:BF  | vxlan-interface:vxlan0.2000             | 35174275   | evpn        | true    | N/A    | 2025-03-02T20:22:42.000Z                |
+|                    | vtep:10.46.3.21 vni:2000                |            |             |         |        |                                         |
++--------------------+-----------------------------------------+------------+-------------+---------+--------+-----------------------------------------+
 ```
 </details>
 
