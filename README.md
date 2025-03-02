@@ -91,10 +91,10 @@ The datapath will look like this:
 client21 <-dot1q-> leaf21 <-vxlan-> PE1 <-mpls-> P1&P2 <-mpls-> PE2 <-vxlan-> Spine11&Spine12 <-vxlan-> leaf11 <-dot1q-> client11
 
 <pre><code>
-```
+
 mermaid flowchart LR client21 --dot1q--> leaf21 --vxlan--> PE1 --mpls--> P1&P2 P1&P2 --mpls--> PE2 --vxlan--> Spine11&Spine12 --vxlan--> leaf11 --dot1q--> client11
-``` 
- </code></pre>
+ 
+</code></pre>
 
 <details>
 <summary>Solution</summary>
