@@ -58,8 +58,9 @@ The datapath will look like this:
 ```
 **Check whether the routing tables have the system IP of VxLAN tunnel endpoints. (Leaf and PE)**
 
-**What is the next hop address that leaf11 follows to go to PE2?**
-**What is the next hop address that leaf21 follows to go to PE1?**
+**What is the next hop address that leaf11 follows to go to PE2 and vice versa?**
+
+**What is the next hop address that leaf21 follows to go to PE1 and vice versa?**
 
 ```
 # For SRLinux
