@@ -145,6 +145,9 @@ show router bgp summary
 / 
 enter candidate
 
+set / interface ethernet-1/1 subinterface 1000 type bridged
+set / interface ethernet-1/1 subinterface 1000 vlan encap single-tagged vlan-id 1000
+
 set / tunnel-interface vxlan0 vxlan-interface 1000 type bridged
 set / tunnel-interface vxlan0 vxlan-interface 1000 ingress vni 1000
 
@@ -169,6 +172,9 @@ commit now
 ```
 / 
 enter candidate
+
+set / interface ethernet-1/1 subinterface 1000 type bridged
+set / interface ethernet-1/1 subinterface 1000 vlan encap single-tagged vlan-id 1000
 
 set / tunnel-interface vxlan0 vxlan-interface 2000 type bridged
 set / tunnel-interface vxlan0 vxlan-interface 2000 ingress vni 2000
