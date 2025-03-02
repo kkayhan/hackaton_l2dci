@@ -28,7 +28,7 @@ ssh -l admin clab-srexperts-pe1
 ssh -l admin clab-srexperts-pe2
 #
 ssh -l admin clab-srexperts-leaf11
-ssh -l admin clab-srexperts-leaf11
+ssh -l admin clab-srexperts-leaf21
 #
 ssh -l user clab-srexperts-client11
 ssh -l user clab-srexperts-client21
