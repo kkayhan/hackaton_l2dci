@@ -58,20 +58,24 @@ The datapath will look like this:
 ```
 **Check whether the routing tables have the system IP of VxLAN tunnel endpoints. (Leaf and PE)**
 
+**What is the next hop address that leaf11 follows to go to PE2?**
+**What is the next hop address that leaf21 follows to go to PE1?**
+
 ```
 # For SRLinux
 /show network-instance default route-table
 ```
 
 ```
-# For SROS
+# For SROS IPv4
 /show router route-table ipv4
 ```
 ```
+# For SROS IPv6
 /show router route-table ipv6
 ```
 
-*What is the next hop address that `leaf11` follows to go to PE2?*
+
 
 ## Task 2: Confirm the overlay for both datacenters is functional and ready
 iBGP is used to exchange overlay EVPN routes. The underlay facilitates this connectivity between the loopbacks of EVPN speakers. For this topology, each leaf peers with the `vRR` node. In production environments, the leaf would be peering with the spines instead. Verify that this peering is setup and functional, verify the address-family of the peering and record the amount of routes being exchanged.
