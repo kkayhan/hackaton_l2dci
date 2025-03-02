@@ -101,7 +101,6 @@ set / network-instance l2dci vxlan-interface vxlan0.1000
 set / network-instance l2dci protocols bgp-evpn bgp-instance 1 admin-state enable
 set / network-instance l2dci protocols bgp-evpn bgp-instance 1 vxlan-interface vxlan0.1000
 set / network-instance l2dci protocols bgp-evpn bgp-instance 1 evi 99
-set / network-instance l2dci protocols bgp-evpn bgp-instance 1 ecmp 8
 set / network-instance l2dci protocols bgp-vpn bgp-instance 1 route-target export-rt target:1:1000
 set / network-instance l2dci protocols bgp-vpn bgp-instance 1 route-target import-rt target:1:1000
 
@@ -117,15 +116,15 @@ commit now
 ```
 / enter candidate
 
-set / tunnel-interface vxlan0 vxlan-interface 1000 type bridged
-set / tunnel-interface vxlan0 vxlan-interface 1000 ingress vni 1000
+set / tunnel-interface vxlan0 vxlan-interface 2000 type bridged
+set / tunnel-interface vxlan0 vxlan-interface 2000 ingress vni 2000
 
 set / network-instance l2dci type mac-vrf
 set / network-instance l2dci admin-state enable
 set / network-instance l2dci interface ethernet-1/1.1000
-set / network-instance l2dci vxlan-interface vxlan0.1000
+set / network-instance l2dci vxlan-interface vxlan0.2000
 set / network-instance l2dci protocols bgp-evpn bgp-instance 1 admin-state enable
-set / network-instance l2dci protocols bgp-evpn bgp-instance 1 vxlan-interface vxlan0.1000
+set / network-instance l2dci protocols bgp-evpn bgp-instance 1 vxlan-interface vxlan0.2000
 set / network-instance l2dci protocols bgp-evpn bgp-instance 1 evi 99
 set / network-instance l2dci protocols bgp-vpn bgp-instance 1 route-target export-rt target:2:1000
 set / network-instance l2dci protocols bgp-vpn bgp-instance 1 route-target import-rt target:2:1000
