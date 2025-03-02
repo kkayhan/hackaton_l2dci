@@ -145,12 +145,15 @@ show router bgp summary
 / 
 enter candidate
 
+#Configure the client facing subinterface with vlan 1000
 set / interface ethernet-1/1 subinterface 1000 type bridged
 set / interface ethernet-1/1 subinterface 1000 vlan encap single-tagged vlan-id 1000
 
+#Configure the vxlan tunnel
 set / tunnel-interface vxlan0 vxlan-interface 1000 type bridged
 set / tunnel-interface vxlan0 vxlan-interface 1000 ingress vni 1000
 
+#Create the L2 EVPN instance and attach physical and vxlan interfaces
 set / network-instance l2dci type mac-vrf
 set / network-instance l2dci admin-state enable
 set / network-instance l2dci interface ethernet-1/1.1000
@@ -173,12 +176,15 @@ commit now
 / 
 enter candidate
 
+#Configure the client facing subinterface with vlan 1000
 set / interface ethernet-1/1 subinterface 1000 type bridged
 set / interface ethernet-1/1 subinterface 1000 vlan encap single-tagged vlan-id 1000
 
+#Configure the vxlan tunnel
 set / tunnel-interface vxlan0 vxlan-interface 2000 type bridged
 set / tunnel-interface vxlan0 vxlan-interface 2000 ingress vni 2000
 
+#Create the L2 EVPN instance and attach physical and vxlan interfaces
 set / network-instance l2dci type mac-vrf
 set / network-instance l2dci admin-state enable
 set / network-instance l2dci interface ethernet-1/1.1000
@@ -204,19 +210,31 @@ TODO / Placeholder: Configure the service on SR OS
 exit all
 configure global
 
+#Create the service that will stitch VxLAN to MPLS
 /configure service vpls "l2dci" admin-state enable
 /configure service vpls "l2dci" service-id 99
 /configure service vpls "l2dci" customer "1"
+
+#Attach the VxLAN interface
 /configure service vpls "l2dci" vxlan instance 1 vni 2000
+
+# First instance of BGP will serve to the VXLAN domain hence RT has to match the RT set on the Leaf
 /configure service vpls "l2dci" bgp 1 route-distinguisher auto-rd
 /configure service vpls "l2dci" bgp 1 route-target export "target:2:1000"
 /configure service vpls "l2dci" bgp 1 route-target import "target:2:1000"
+
+# Second instance of BGP will serve to the MPLS domain, hence RT has to match the RT of the remote DCGW.
 /configure service vpls "l2dci" bgp 2 route-distinguisher auto-rd
 /configure service vpls "l2dci" bgp 2 route-target export "target:99:99"
 /configure service vpls "l2dci" bgp 2 route-target import "target:99:99"
+
 /configure service vpls "l2dci" bgp-evpn evi 99
+
+# Tunnel binding for VXLAN domain
 /configure service vpls "l2dci" bgp-evpn vxlan 1 admin-state enable
 /configure service vpls "l2dci" bgp-evpn vxlan 1 vxlan-instance 1
+
+# Tunnel binding for MPLS domain
 /configure service vpls "l2dci" bgp-evpn mpls 2 admin-state enable
 /configure service vpls "l2dci" bgp-evpn mpls 2 auto-bind-tunnel resolution any
 
@@ -234,19 +252,31 @@ commit
 exit all
 configure global
 
+#Create the service that will stitch VxLAN to MPLS
 /configure service vpls "l2dci" admin-state enable
 /configure service vpls "l2dci" service-id 99
 /configure service vpls "l2dci" customer "1"
+
+#Attach the VxLAN interface
 /configure service vpls "l2dci" vxlan instance 1 vni 1000
+
+# First instance of BGP will serve to the VXLAN domain hence RT has to match the RT set on the Leaf
 /configure service vpls "l2dci" bgp 1 route-distinguisher auto-rd
 /configure service vpls "l2dci" bgp 1 route-target export "target:1:1000"
 /configure service vpls "l2dci" bgp 1 route-target import "target:1:1000"
+
+# Second instance of BGP will serve to the MPLS domain, hence RT has to match the RT of the remote DCGW.
 /configure service vpls "l2dci" bgp 2 route-distinguisher auto-rd
 /configure service vpls "l2dci" bgp 2 route-target export "target:99:99"
 /configure service vpls "l2dci" bgp 2 route-target import "target:99:99"
+
 /configure service vpls "l2dci" bgp-evpn evi 99
+
+# Tunnel binding for VXLAN domain
 /configure service vpls "l2dci" bgp-evpn vxlan 1 admin-state enable
 /configure service vpls "l2dci" bgp-evpn vxlan 1 vxlan-instance 1
+
+# Tunnel binding for MPLS domain
 /configure service vpls "l2dci" bgp-evpn mpls 2 admin-state enable
 /configure service vpls "l2dci" bgp-evpn mpls 2 auto-bind-tunnel resolution any
 
