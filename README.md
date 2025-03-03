@@ -103,8 +103,6 @@ Flags: S static, D dynamic, L discovered by LLDP, B BFD enabled, - disabled, * s
 ## Task 3: Confirm the DCGW BGP-EVPN peerings have established and exchanging routes
 The `vRR` is expected to be exchanging routes with both the DCGW nodes and the leafs. In the last step, we verified the latter, now access the two PE nodes and confirm the EVPN peering with vRR is in an good shape. Once again, record the address-families in use as well as the number of routes being exchanged.
 
-Note: vRR system IP is fd00:fde8::3:13
-
 <details>
 <summary>Solution</summary>
 
