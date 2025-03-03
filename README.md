@@ -41,8 +41,10 @@ ssh -l user clab-srexperts-client21
 ## Task 1: Confirm the underlay for both datacenters is functional and ready
 In each datacenter the leaf node needs to have a way to reach the edge of the datacenter, also known as the DCGW. In both datacenters in this topology, eBGP fulfills the role of underlay transport protocol that is used to route VxLAN encapsulated packets.
 
-Confirm that the underlay network is set up correctly, and the leafs have reachability to the DCGWs and the `vRR` node being used to exchange service routes. In a production network the spines are usually selected as the route-reflectors, but in this case vRR is going to serve as RR.
+Confirm that the underlay network is set up correctly, and the leafs have reachability to the DCGWs.
 
+Hint: What is the next hop address that leaf11 follows to go to PE2 and vice versa?
+      What is the next hop address that leaf21 follows to go to PE1 and vice versa?
 
 **Check the status of BGP neighbors**
 
@@ -55,17 +57,13 @@ Confirm that the underlay network is set up correctly, and the leafs have reacha
 # For SROS
 /show router bgp summary
 ```
+
 **Check whether the routing tables have the system IP of VxLAN tunnel endpoints. (Leaf and PE)**
-
-**What is the next hop address that leaf11 follows to go to PE2 and vice versa?**
-
-**What is the next hop address that leaf21 follows to go to PE1 and vice versa?**
 
 ```
 # For SRLinux
 /show network-instance default route-table
 ```
-
 ```
 # For SROS IPv4
 /show router route-table ipv4
