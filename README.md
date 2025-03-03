@@ -43,8 +43,7 @@ In each datacenter the leaf node needs to have a way to reach the edge of the da
 
 Confirm that the underlay network is set up correctly, and the leafs have reachability to the DCGWs.
 
-Hint: What is the next hop address that leaf11 follows to go to PE2 and vice versa?
-Hint: What is the next hop address that leaf21 follows to go to PE1 and vice versa?
+Hint: What is the next hop address that leaf11 follows to go to PE2 and vice versa?   What is the next hop address that leaf21 follows to go to PE1 and vice versa?
 
 **Check the status of BGP neighbors**
 
