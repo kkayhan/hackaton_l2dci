@@ -78,8 +78,6 @@ Confirm that the underlay network is set up correctly, and the leafs have reacha
 ## Task 2: Confirm the Leaf BGP-EVPN peerings have established and exchanging routes
 iBGP EVPN family is used to exchange overlay routes. The underlay facilitates this connectivity between the loopbacks of EVPN speakers. For this topology, each leaf peers with the `vRR` node. In production environments, the leaf would be peering with the spines or DCGW instead. Verify that this peering is setup and functional, verify the address-family of the peering and record the amount of routes being exchanged.
 
-Note: vRR system IP is fd00:fde8::3:13
-
 <details>
 <summary>Solution</summary>
 
