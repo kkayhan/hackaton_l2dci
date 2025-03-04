@@ -12,7 +12,7 @@ In this lab, you will configure a L2 DCI or L2 Datacenter Interconnect EVPN serv
 
 In the diagram below you will see two datacenters which are interconnected with a WAN. 
 
-![topology](./topology.png)
+![topology](./topology1.png)
 
 You will perform necessary pre-checks to understand whether or not the underlay and overlay are ready, add the configuration for your service and verify it functions correctly.
 
