@@ -75,11 +75,13 @@ Hint: What is the next hop address that leaf11 follows to go to PE2 and vice ver
 ## Task 2: Confirm the Leaf BGP-EVPN peerings have established and exchanging routes
 iBGP EVPN family is used to exchange overlay routes. The underlay facilitates this connectivity between the loopbacks of EVPN speakers. For this topology, each leaf peers with the `vRR` node. In production environments, the leaf would be peering with the spines or DCGW instead. Verify that this peering is setup and functional, verify the address-family of the peering and record the amount of routes being exchanged.
 
+**Hint:** The vRR is the only peer with the EVPN family established in its BGP neighbors. Use the BGP commands to find the peer that is BGP EVPN family speaker.
+
 <details>
 <summary>Solution</summary>
 
 ```
-A:g3-leaf11# show network-instance default protocols bgp neighbor fd00:fde8::3:13
+A:g3-leaf11# show network-instance default protocols bgp neighbor fd00:fde8::#:13 (vRR IP is unique for your setup)
 ----------------------------------------------------------------------------------------------------------------------------------------
 BGP neighbor summary for network-instance "default"
 Flags: S static, D dynamic, L discovered by LLDP, B BFD enabled, - disabled, * slow
@@ -100,14 +102,14 @@ Flags: S static, D dynamic, L discovered by LLDP, B BFD enabled, - disabled, * s
 ## Task 3: Confirm the DCGW BGP-EVPN peerings have established and exchanging routes
 The `vRR` is expected to be exchanging routes with both the DCGW nodes and the leafs. In the last step, we verified the latter, now access the two PE nodes and confirm the EVPN peering with vRR is in an good shape. Once again, record the address-families in use as well as the number of routes being exchanged.
 
-Hint: The vRR is the only peer with the EVPN family established in its BGP neighbors. Use the BGP commands from the previous step to find it.
+**Hint:** The vRR is the only peer with the EVPN family established in its BGP neighbors. Use the BGP commands from the previous step to find it.
 
 
 <details>
 <summary>Solution</summary>
 
 ```
-show router bgp summary neighbor "fd00:fde8::3:13"
+show router bgp summary neighbor "fd00:fde8::#:13" (vRR IP is unique for your setup)
 ...omitted output...
 ===============================================================================
 BGP Summary
